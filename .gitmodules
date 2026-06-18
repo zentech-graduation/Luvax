@@ -1,15 +1,7 @@
-[submodule "Luvax"]
-    path = Luvax
-    url = https://github.com/zentech-graduation/Luvax.git
-    branch = main
-
-[submodule "app-fe"]
-    path = app-fe
-    url = https://github.com/zentech-graduation/app-fe.git
-    branch = main
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/zentech-graduation/frontend.git
+
 [submodule "backend"]
 	path = backend
 	url = https://github.com/zentech-graduation/backend.git
