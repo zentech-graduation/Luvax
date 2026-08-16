@@ -27,7 +27,7 @@ jobs:
 
       - name: Update submodules to latest main
         run: |
-          git submodule update --remote --merge
+          git submodule update --remote
 
       - name: Commit if changed
         run: |
