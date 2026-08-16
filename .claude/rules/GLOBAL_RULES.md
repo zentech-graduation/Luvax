@@ -198,3 +198,14 @@ Alongside these, config tables store display metadata and behavioral policy for 
 
 **Rule**: These tables must never store secrets, private keys, OAuth credentials, database URLs,
 or any sensitive environment-specific values. Those remain in environment variables.
+
+---
+
+## 9. Git Commit Conventions
+
+**Rule**: Commit messages must never include AI co-author attribution in any form —
+no `Co-Authored-By:` trailers, no "Generated with" footers, no agent names or signatures
+of any kind. This applies to every sub-project and the root aggregator repository, and to
+every agent (Claude Code, Codex, or any other Agents SDK client) working in this workspace.
+
+Commit authorship reflects the human developer only.
