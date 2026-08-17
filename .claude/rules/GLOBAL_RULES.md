@@ -162,18 +162,18 @@ media inspection at upload time.
 
 ### Environment Configuration
 
-- BE environment variables: defined in `Luvax/.env.example`
-- FE environment variables: defined in `app-fe/.env.example`; all variables use the `VITE_` prefix
+- BE environment variables: defined in `backend/.env.example`
+- FE environment variables: defined in `frontend/.env.example`; all variables use the `VITE_` prefix
 - Never commit `.env` files. Never commit secrets.
 - Root-level `.env` files are prohibited.
 
 ### Rule Hierarchy
 
 1. Root `GLOBAL_RULES.md` (this file): workspace-wide constraints — lowest override priority
-2. `Luvax/.claude/rules/` files: BE-specific rules, extend root where they add specificity
-3. `Luvax/docs/modules/GLOBAL_RULES.md`: BE data layer rules, take precedence for BE data decisions
-4. `app-fe/.claude/rules/GLOBAL_RULES.md`: FE-specific rules, extend root where they add specificity
-5. `Luvax/docs/modules/{module}/DATA_RULES.md`: highest specificity, always win for their module
+2. `backend/.claude/rules/` files: BE-specific rules, extend root where they add specificity
+3. `backend/docs/modules/GLOBAL_RULES.md`: BE data layer rules, take precedence for BE data decisions
+4. `frontend/.claude/rules/global_rules.md`: FE-specific rules, extend root where they add specificity
+5. `backend/docs/modules/{module}/DATA_RULES.md`: highest specificity, always win for their module
 
 ### Enum vs. Config Table Relationship
 

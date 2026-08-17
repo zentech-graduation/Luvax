@@ -19,22 +19,22 @@
 ├── .gitmodules               # Submodule declarations (path + remote URL)
 ├── .gitignore                # Root-level ignores (no source-code ignores)
 ├── git-setup.sh              # Setup script — review before running
-├── Luvax/                    # Backend sub-project (Spring Boot)
-└── app-fe/                   # Frontend sub-project (React + Vite)
+├── backend/                  # Backend sub-project (Spring Boot)
+└── frontend/                 # Frontend sub-project (React + Vite)
 ```
 
 ### Git Submodule Configuration
 
 | Submodule | Path | Remote | Branch |
 |-----------|------|--------|--------|
-| Backend | Luvax/ | https://github.com/zentech-graduation/Luvax.git | main |
-| Frontend | app-fe/ | https://github.com/zentech-graduation/app-fe.git | main |
+| Backend | backend/ | https://github.com/zentech-graduation/backend.git | main |
+| Frontend | frontend/ | https://github.com/zentech-graduation/frontend.git | main |
 
 ---
 
 ## Section 2 — Backend Overview
 
-Full detail: `Luvax/.claude/rules/struct.md`
+Full detail: `backend/.claude/rules/struct.md`
 
 ### Technology Stack
 
@@ -97,7 +97,7 @@ V17 views → V18 metadata config tables
 
 ## Section 3 — Frontend Overview
 
-Full detail: `app-fe/.claude/rules/STRUCT.md`
+Full detail: `frontend/.claude/rules/struct.md`
 
 ### Technology Stack
 
@@ -164,7 +164,7 @@ npm run preview    # Preview production build
 ### Environment Variable Prefix
 
 All FE environment variables use the `VITE_` prefix (Vite convention).
-See `app-fe/.env.example` for the full list.
+See `frontend/.env.example` for the full list.
 
 ---
 
@@ -173,7 +173,7 @@ See `app-fe/.env.example` for the full list.
 ### How FE Calls BE
 
 - API base URL: configured via `VITE_API_URL` env var (default: `http://localhost:8080/api/v1`)
-- In dev mode, Vite proxies `/api/v1` to the BE (configured in `app-fe/vite.config.js`)
+- In dev mode, Vite proxies `/api/v1` to the BE (configured in `frontend/vite.config.js`)
 - Auth header: `Authorization: Bearer <accessToken>` injected by `axiosClient` request interceptor
 - Token refresh: automatic on 401 — `axiosClient` intercepts, calls `/auth/refresh`, replays original request
 - Public (unauthenticated) calls use `publicClient`; authenticated calls use `axiosClient`
