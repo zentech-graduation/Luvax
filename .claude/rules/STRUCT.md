@@ -46,7 +46,7 @@ Full detail: `backend/.claude/rules/struct.md`
 | Cache | Redis |
 | Message Broker | RabbitMQ |
 | Build | Maven (`./mvnw`) |
-| Migrations | Flyway (91 migrations, V01-V91) |
+| Migrations | Flyway (89 migrations, V01-V89) |
 | Resilience | Resilience4j (Spring Cloud 2025.1.1) |
 | Security | Spring Security 6, JWT |
 | ORM | Spring Data JPA / Hibernate |
@@ -85,8 +85,9 @@ See `backend/.claude/rules/struct.md` for each module's sub-packages and
 
 ### Infrastructure Services
 
-- **PostgreSQL** (docker-compose): canonical data store; 91 Flyway migrations, ten of which build indexes `CONCURRENTLY` behind a `.sql.conf` sidecar
-- **Redis** (docker-compose): token blacklist, refresh tokens, rate limiting
+- **PostgreSQL** (docker-compose): canonical data store; 89 Flyway migrations, ten of which build indexes `CONCURRENTLY` behind a `.sql.conf` sidecar
+- **Redis** (docker-compose): token blacklist, one-time email and password-reset tokens, rate limiting.
+  Refresh tokens are SHA-256 hashed in PostgreSQL, not Redis
 - **RabbitMQ** (docker-compose): async event delivery. 6 exchanges and 20 durable queues declared in `RabbitMqTopologyConfig`, driving 14 `@RabbitListener` consumers. `social.events` is the topic bus and `social.events.dlx` the dead-letter exchange; `comment.live.events`, `message.live.events`, `notification.live.events` and `post.live.events` are fanout tiers fed by exchange-to-exchange bindings
 - Swagger / OpenAPI at `/api-docs` (dev profile only)
 
@@ -97,7 +98,7 @@ V06 posts → V07 comments → V08 hashtags → V09 stories → V10 notification
 V12 reports → V13 admin → V14 recommendation → V15 indexes → V16 triggers/functions →
 V17 views → V18 metadata config tables → V19-V91 incremental schema evolution
 
-The full V01-V91 table is in `backend/.claude/rules/struct.md`; it is maintained there rather than
+The full V01-V89 table is in `backend/.claude/rules/struct.md`; it is maintained there rather than
 duplicated here, because a list in two places drifts in one of them.
 
 ### Redis Key Patterns
@@ -106,7 +107,7 @@ duplicated here, because a list in two places drifts in one of them.
 |---------|-----|---------|
 | `auth:token:email-verification:{sha256}` | 24h | Email verification token |
 | `auth:token:password-reset:{sha256}` | 15m | Password reset token |
-| `auth:blacklist:jti:{jti}` | remaining access token lifetime | Token blacklist |
+| `auth:blacklist:{jti}` | remaining access token lifetime | Token blacklist |
 | `app:{domain}:{id}` | varies | Single entries (planned) |
 | `app:{domain}:list` | varies | Collections (planned) |
 
@@ -209,7 +210,7 @@ See `frontend/.env.example` for the full list.
 | Token | Storage | Notes |
 |-------|---------|-------|
 | Access token | In-memory (Zustand, not persisted) | Short-lived; cleared on tab close |
-| Refresh token | In-memory (Zustand, not persisted) | Planned migration to HttpOnly cookie |
+| Refresh token | HttpOnly cookie, never readable by JavaScript | `Secure`, `SameSite=Lax`, path-scoped to `/api/v1/auth` |
 | User + isAuthenticated | `localStorage` via Zustand persist | Key: `luvax-auth-session` |
 
 ### Shared Contracts
